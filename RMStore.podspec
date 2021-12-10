@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'RMStore'
-  s.version = '0.7.1'
+  s.version = '0.7.1.1'
   s.license = 'Apache 2.0'
   s.summary = 'A lightweight iOS library for In-App Purchases that adds blocks and notifications to StoreKit, plus verification, persistence and downloads.'
   s.homepage = 'https://github.com/robotmedia/RMStore'
@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
     arv.dependency 'RMStore/Core'
     arv.platform = :ios, '7.0'
     arv.source_files = 'RMStore/Optional/RMStoreAppReceiptVerifier.{h,m}', 'RMStore/Optional/RMAppReceipt.{h,m}'
-    arv.dependency 'OpenSSL', '~> 1.0'
+    arv.dependency 'OpenSSL-Universal'
   end
 
   s.subspec 'TransactionReceiptVerifier' do |trv|
