@@ -61,7 +61,7 @@ typedef void (^RMSKPaymentTransactionSuccessBlock)(SKPaymentTransaction *transac
 typedef void (^RMSKProductsRequestFailureBlock)(NSError *error);
 typedef void (^RMSKProductsRequestSuccessBlock)(NSArray *products, NSArray *invalidIdentifiers);
 typedef void (^RMStoreFailureBlock)(NSError *error);
-typedef void (^RMStoreSuccessBlock)();
+typedef void (^RMStoreSuccessBlock)(void);
 
 @implementation NSNotification(RMStore)
 
@@ -141,7 +141,7 @@ typedef void (^RMStoreSuccessBlock)();
     
     SKReceiptRefreshRequest *_refreshReceiptRequest;
     void (^_refreshReceiptFailureBlock)(NSError* error);
-    void (^_refreshReceiptSuccessBlock)();
+    void (^_refreshReceiptSuccessBlock)(void);
     
     void (^_restoreTransactionsFailureBlock)(NSError* error);
     void (^_restoreTransactionsSuccessBlock)(NSArray* transactions);
@@ -681,7 +681,11 @@ typedef void (^RMStoreSuccessBlock)();
 - (void)requestDidFinish:(SKRequest *)request
 {
     RMStoreLog(@"refresh receipt finished");
+    if (_refreshReceiptRequest) {
+        [_refreshReceiptRequest cancel];
+    }
     _refreshReceiptRequest = nil;
+    
     if (_refreshReceiptSuccessBlock)
     {
         _refreshReceiptSuccessBlock();
@@ -693,7 +697,12 @@ typedef void (^RMStoreSuccessBlock)();
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error
 {
     RMStoreLog(@"refresh receipt failed with error %@", error.debugDescription);
+
+    if (_refreshReceiptRequest) {
+        [_refreshReceiptRequest cancel];
+    }
     _refreshReceiptRequest = nil;
+    
     if (_refreshReceiptFailureBlock)
     {
         _refreshReceiptFailureBlock(error);
