@@ -779,6 +779,8 @@ typedef void (^RMStoreSuccessBlock)(void);
 - (void)requestDidFinish:(SKRequest *)request
 {
     [self.store removeProductsRequestDelegate:self];
+    ///
+    [request cancel];
 }
 
 - (void)request:(SKRequest *)request didFailWithError:(NSError *)error
@@ -795,6 +797,8 @@ typedef void (^RMStoreSuccessBlock)(void);
     }
     [[NSNotificationCenter defaultCenter] postNotificationName:RMSKProductsRequestFailed object:self.store userInfo:userInfo];
     [self.store removeProductsRequestDelegate:self];
+    ///
+    [request cancel];
 }
 
 @end
