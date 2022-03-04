@@ -111,7 +111,7 @@ static NSURL *_appleRootCertificateURL = nil;
     {
         NSMutableArray *purchases = [NSMutableArray array];
         // Explicit casting to avoid errors when compiling as Objective-C++
-        __weak typeof(RMAppReceipt) weakSelf = self;
+        __weak typeof(self) weakSelf = self;
         [RMAppReceipt enumerateASN1Attributes:(const uint8_t*)asn1Data.bytes length:asn1Data.length usingBlock:^(NSData *data, int type) {
             __strong typeof(RMAppReceipt) strongSelf = weakSelf;
             if (strongSelf == nil) {
@@ -336,7 +336,7 @@ static NSURL *_appleRootCertificateURL = nil;
     if (self = [super init])
     {
         // Explicit casting to avoid errors when compiling as Objective-C++
-        __weak typeof(RMAppReceiptIAP) weakSelf = self;
+        __weak typeof(self) weakSelf = self;
         ///
         [RMAppReceipt enumerateASN1Attributes:(const uint8_t*)asn1Data.bytes length:asn1Data.length usingBlock:^(NSData *data, int type) {
             __strong typeof(RMAppReceiptIAP) strongSelf = weakSelf;
