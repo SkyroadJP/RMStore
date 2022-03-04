@@ -288,8 +288,8 @@ typedef void (^RMStoreSuccessBlock)(void);
     [self refreshReceiptOnSuccess:nil failure:nil];
 }
 
-- (void)refreshReceiptOnSuccess:(RMStoreSuccessBlock)successBlock
-                        failure:(RMStoreFailureBlock)failureBlock
+- (void)refreshReceiptOnSuccess:(void (^)(void))successBlock
+                        failure:(void (^)(NSError *error))failureBlock
 {
     _refreshReceiptFailureBlock = failureBlock;
     _refreshReceiptSuccessBlock = successBlock;
