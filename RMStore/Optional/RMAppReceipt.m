@@ -103,6 +103,16 @@ static NSString* RMASN1ReadIA5SString(const uint8_t **pp, long omax)
 
 static NSURL *_appleRootCertificateURL = nil;
 
+@interface RMAppReceipt ()
+@property (nonatomic, strong) NSString *bundleIdentifier;
+@property (nonatomic, strong) NSData *bundleIdentifierData;
+@property (nonatomic, strong) NSString *appVersion;
+@property (nonatomic, strong) NSData *opaqueValue;
+@property (nonatomic, strong) NSData *receiptHash;
+@property (nonatomic, strong) NSString *originalAppVersion;
+@property (nonatomic, strong) NSDate *expirationDate;
+@end
+
 @implementation RMAppReceipt
 
 - (instancetype)initWithASN1Data:(NSData*)asn1Data
@@ -111,9 +121,9 @@ static NSURL *_appleRootCertificateURL = nil;
     {
         NSMutableArray *purchases = [NSMutableArray array];
         // Explicit casting to avoid errors when compiling as Objective-C++
-        __weak typeof(self) weakSelf = self;
+        __weak typeof(RMAppReceipt *) weakSelf = self;
         [RMAppReceipt enumerateASN1Attributes:(const uint8_t*)asn1Data.bytes length:asn1Data.length usingBlock:^(NSData *data, int type) {
-            __strong typeof(RMAppReceipt) strongSelf = weakSelf;
+            __strong typeof(RMAppReceipt *) strongSelf = weakSelf;
             if (strongSelf == nil) {
                 return;
             }
@@ -329,6 +339,18 @@ static NSURL *_appleRootCertificateURL = nil;
 
 @end
 
+@interface RMAppReceiptIAP ()
+@property (nonatomic) NSInteger quantity;
+@property (nonatomic, strong) NSString *productIdentifier;
+@property (nonatomic, strong) NSString *transactionIdentifier;
+@property (nonatomic, strong) NSString *originalTransactionIdentifier;
+@property (nonatomic, strong) NSDate *purchaseDate;
+@property (nonatomic, strong) NSDate *originalPurchaseDate;
+@property (nonatomic, strong) NSDate *subscriptionExpirationDate;
+@property (nonatomic, strong) NSDate *cancellationDate;
+@property (nonatomic) NSInteger webOrderLineItemID;
+@end
+
 @implementation RMAppReceiptIAP
 
 - (instancetype)initWithASN1Data:(NSData*)asn1Data
@@ -336,10 +358,10 @@ static NSURL *_appleRootCertificateURL = nil;
     if (self = [super init])
     {
         // Explicit casting to avoid errors when compiling as Objective-C++
-        __weak typeof(self) weakSelf = self;
+        __weak typeof(RMAppReceiptIAP *) weakSelf = self;
         ///
         [RMAppReceipt enumerateASN1Attributes:(const uint8_t*)asn1Data.bytes length:asn1Data.length usingBlock:^(NSData *data, int type) {
-            __strong typeof(RMAppReceiptIAP) strongSelf = weakSelf;
+            __strong typeof(RMAppReceiptIAP *) strongSelf = weakSelf;
             if (strongSelf == nil) {
                 return;
             }
